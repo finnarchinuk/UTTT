@@ -90,3 +90,29 @@ def add_valid_moves(board_obj):
     plt.scatter(*np.array(ops.get_valid_moves(board_obj)).T,
                 marker='s',
                 c='purple')
+
+
+''' ---- part 2: nathans visualization ----- '''
+
+def unconvert_log(symbol):
+    ''' part of loading a game from a string '''
+    offset = 32
+    int_position = ord(symbol) - offset
+    return (int_position//9, int_position%9)
+
+def cvt_vis_app(board_obj) -> str:
+    ''' converts a game board to a string for visualization with the app '''
+    return ''.join([(chr(_p[0]*9 + _p[1] + 32)) for _p in board_obj.hist[:board_obj.n_moves]])
+
+def load_game(game_string: str) -> board_obj:
+    temp_board = board_obj()
+    debug_log = list()
+    ''' plays through a game up to the end of the game log '''
+    for idx, encoded_position in enumerate(game_string):
+        _move = unconvert_log(encoded_position)
+        if not ops.check_move_is_valid(temp_board,_move):
+            played_moves = ''.join(debug_log)
+            raise Exception(f'valid moves played - {played_moves} - invalid move - {encoded_position}')
+        ops.make_move(temp_board, _move)
+        debug_log.append(encoded_position)
+    return temp_board
