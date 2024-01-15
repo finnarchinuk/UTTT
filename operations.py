@@ -82,11 +82,11 @@ class ops():
             finished_mask = np.zeros((9,9),dtype=bool)
             # loop through each finished box
             temp_in = np.any(board_obj.miniboxes,axis=2)
-            for _box_finished, _flag in zip(zip(*np.where(temp_in==False)),temp_in.flatten()):
-                if _flag:
-                    finished_mask[_box_finished[0]*3:(_box_finished[0]+1)*3,
-                                  _box_finished[1]*3:(_box_finished[1]+1)*3] = False
-            return list(zip(*np.where(all_valid | finished_mask)))
+            for _box_finished_x, _box_finished_y, _flag in zip(np.arange(9)//3,np.arange(9)%3,temp_in.flatten()):
+                if ~_flag:
+                    finished_mask[_box_finished_x*3:(_box_finished_x+1)*3,
+                                  _box_finished_y*3:(_box_finished_y+1)*3] = True
+            return list(zip(*np.where(all_valid & finished_mask)))
         
         # mask to miniboard
         mini_mask = np.zeros((9,9),dtype=bool)
