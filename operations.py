@@ -161,6 +161,10 @@ class ops():
 
         # valid moves (converted to tuples)
         temp_dict['valid_moves'] = ops.get_valid_moves(board_obj)
+        temp_dict['history'] = board_obj.hist
+        temp_dict['n_moves'] = board_obj.n_moves
+        temp_dict['markers'] = board_obj.markers
+        temp_dict['miniboxes'] = board_obj.miniboxes
         return temp_dict
     
     @staticmethod # to be used infrequently, not efficient and rarely needed
