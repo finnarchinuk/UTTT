@@ -15,3 +15,8 @@ class board_obj():
         # board history
         self.hist = np.zeros((81,2),dtype=np.uint8)
         self.n_moves = 0
+    def build_from_dict_gamestate(self, gamestate: dict):
+        self.markers = gamestate['markers']
+        self.miniboxes = gamestate['miniboxes']
+        self.hist = gamestate['history']
+        self.n_moves = gamestate['n_moves']
